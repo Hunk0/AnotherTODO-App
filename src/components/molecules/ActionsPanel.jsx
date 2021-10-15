@@ -5,6 +5,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import Fab from '@mui/material/Fab';
+import Tooltip from '@mui/material/Tooltip';
 import FormModal from '../organism/FormModal';
 import CustomTaskForm from './CustomTaskForm';
 import DeleteTaskForm from './DeleteTaskForm';
@@ -37,11 +38,15 @@ function ActionsPanel({selected, onChange, onClear, onEdit, onDelete}) {
         <div className={classes.root}>
             <div className={classes.panel}>
                 <Fab size="small" color="primary" aria-label="left" disabled={selected.stage === 0} onClick={() => onChange(selected.stage - 1)}>
-                    <ChevronLeftIcon />
+                    <Tooltip title="To left">
+                        <ChevronLeftIcon />
+                    </Tooltip>
                 </Fab>
 
                 <Fab size="small" color="primary" aria-label="right" disabled={selected.stage === 2} onClick={() => onChange(selected.stage + 1)}>
-                    <ChevronRightIcon />
+                    <Tooltip title="To right">
+                        <ChevronRightIcon />
+                    </Tooltip>
                 </Fab>
 
                 <FormModal
@@ -49,7 +54,9 @@ function ActionsPanel({selected, onChange, onClear, onEdit, onDelete}) {
                     onSubmit={handleEdit}
                     Launcher={
                         <Fab size="small" color="secondary" aria-label="edit">
-                            <EditIcon />
+                            <Tooltip title="Edit">
+                                <EditIcon />
+                            </Tooltip>
                         </Fab>
                     }
                 >
@@ -61,7 +68,9 @@ function ActionsPanel({selected, onChange, onClear, onEdit, onDelete}) {
                     onSubmit={handleDelete}
                     Launcher={
                         <Fab size="small" color="secondary" style={{backgroundColor: "red"}} aria-label="remove">
-                            <DeleteIcon />
+                            <Tooltip title="Delete">
+                                <DeleteIcon />
+                            </Tooltip>
                         </Fab>
                     }
                 >
@@ -69,7 +78,9 @@ function ActionsPanel({selected, onChange, onClear, onEdit, onDelete}) {
                 </FormModal>                
 
                 <Fab size="small" aria-label="cancel" onClick={onClear}>
-                    <ClearIcon />
+                    <Tooltip title="Cancel">
+                        <ClearIcon />
+                    </Tooltip>
                 </Fab>
             </div>
         </div>

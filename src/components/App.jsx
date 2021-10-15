@@ -1,9 +1,11 @@
 import { useState } from "react";
 import ActionsPanel from "./molecules/ActionsPanel";
+import SearchBar from "./molecules/SearchBar";
 import OptionsMenu from "./organism/OptionsMenu";
 import TasksBoard from "./organism/TasksBoard";
 
 function App() {
+  const [search, setSearch] = useState("")
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
 
@@ -44,9 +46,15 @@ function App() {
     setSelectedTask(newState[index]);
   }
 
+  function handleSearch(evt){
+    setSearch(evt.target.value);
+    if(selectedTask && !selectedTask.content.toLowerCase().includes(evt.target.value)) setSelectedTask(null);
+  }
+
   return (
     <div>
-      <TasksBoard list={tasks} selected={selectedTask} onClick={task => setSelectedTask(task)}/>
+      <SearchBar onChange={handleSearch}/>
+      <TasksBoard list={(search)?tasks.filter(task => task.content.toLowerCase().includes(search)):tasks} selected={selectedTask} onClick={task => setSelectedTask(task)}/>
       <ActionsPanel 
         selected={selectedTask} 
         onChange={changeStage} 
