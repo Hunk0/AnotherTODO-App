@@ -1,22 +1,32 @@
 import { useState } from "react";
-import TasksList from "./organism/TasksList";
+import ActionsPanel from "./molecules/ActionsPanel";
 import OptionsMenu from "./organism/OptionsMenu";
-
-const stages = ['To Do', 'Ongoing', 'Done'];
-
+import TasksBoard from "./organism/TasksBoard";
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
 
   function addTasks(newer){
-    setTasks([...tasks, newer].flat());
+    setTasks([...new Set([...tasks, newer].flat())]);
+  }
+
+  function changeStage(nStage){
+    const index = tasks.indexOf(selectedTask);
+    const newState = tasks;    
+    newState.splice(index, 1, {
+      ...selectedTask,
+      stage: nStage
+    });
+
+    setTasks(newState);
+    setSelectedTask(newState[index]);
   }
 
   return (
     <div>
-      {stages.map((stage, i) =>  <TasksList key={i} title={stage} list={tasks.filter(task => task.stage === stage)} onClick={task => setSelectedTask(task)}/>)}
-
+      <TasksBoard list={tasks} selected={selectedTask} onClick={task => setSelectedTask(task)}/>
+      <ActionsPanel selected={selectedTask} onChange={changeStage} onClear={() => setSelectedTask(null)}/>
       <OptionsMenu onAdd={addTasks}/>
     </div>
   );
