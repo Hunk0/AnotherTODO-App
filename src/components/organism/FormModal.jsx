@@ -3,7 +3,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 
-function FormModal({Launcher, children, title, onAdd}) {
+function FormModal({Launcher, children, title, onSubmit}) {
     const [show, setShow] = useState(false);
 
     function handleOpen(){
@@ -14,8 +14,8 @@ function FormModal({Launcher, children, title, onAdd}) {
         setShow(false);
     }
 
-    function handleAdd(tasks){
-        onAdd(tasks); 
+    function handleSubmit(tasks){
+        onSubmit(tasks); 
         handleClose();
     }
 
@@ -32,7 +32,7 @@ function FormModal({Launcher, children, title, onAdd}) {
                 </DialogTitle>
 
                 <DialogContent>
-                    {React.cloneElement(children, {onAdd: handleAdd})}
+                    {React.cloneElement(children, {onSubmit: handleSubmit})}
                 </DialogContent>
             </Dialog>
         </React.Fragment>

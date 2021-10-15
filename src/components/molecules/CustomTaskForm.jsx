@@ -2,10 +2,10 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-function CustomTaskForm({onAdd}) {
-    function onSubmit(e){
+function CustomTaskForm({onSubmit, defaulValue = ""}) {
+    function handleSubmit(e){
         e.preventDefault();
-        onAdd({content: e.target[0].value, stage: 0});
+        onSubmit({content: e.target[0].value, stage: 0});
     }
 
     return (
@@ -16,12 +16,13 @@ function CustomTaskForm({onAdd}) {
                 '& .MuiTextField-root': { marginBottom: 1 }
             }}
             autoComplete="off"
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit}
             noValidate
         >
             <TextField
                 name="new-task"
                 label="Describe your task..."
+                defaultValue={defaulValue}
                 rows={4}
                 multiline
                 fullWidth

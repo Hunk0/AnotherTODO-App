@@ -3,8 +3,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-function RandomTaskForm({onAdd}) {
-    function onSubmit(e){
+function RandomTaskForm({onSubmit}) {
+    function handleSubmit(e){
         e.preventDefault();
 
         const limit = Number(e.target[0].value);
@@ -13,12 +13,9 @@ function RandomTaskForm({onAdd}) {
             .then(res => {
                 res.json().then(data => {
                     const tasks = data.data.map(data => {return {content: data.fact, stage: 0}});
-                    onAdd(tasks)
+                    onSubmit(tasks)
                 })
             })
-            
-
-        //onAdd({content: e.target[0].value, stage: 0});
     }
 
     return (
@@ -29,7 +26,7 @@ function RandomTaskForm({onAdd}) {
                 '& .MuiTextField-root': { marginBottom: 1 }
             }}
             autoComplete="off"
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit}
             noValidate
         >
             <Typography component="div" style={{display: 'flex', alignItems: 'center'}} variant="body1" gutterBottom>
